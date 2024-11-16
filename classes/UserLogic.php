@@ -34,8 +34,7 @@ class UserLogic
      */
     public static function login($email, $password)
     {
-
-        $result = false;
+        $result =  false;
         //ユーザーをemailから検索して取得
         $user = self::getUserByEmail($email);
         if (!$user) {//配列が空=データベースに合致するemailが存在しない場合
@@ -76,11 +75,10 @@ class UserLogic
         } catch (\Exception $e) {
             return false;
         }
-        
     }
 
     /**
-     * emailからユーザーを取得
+     * ログイン済みか判定
      * @param string void
      * @return bool false
      */
@@ -122,6 +120,63 @@ class UserLogic
             return $result;
         } catch (\Exception $e) {
             echo $e->getMessage() . "<br>";;
+        }
+    }
+
+    /**
+     * ユーザーを情報を更新する
+     * @param array $userData
+     * @return bool $result
+     */
+    public static function updateUser($userData)
+    {
+        $result = false;
+        self::checkLogin();
+        if (!$result) exit('ログインしてください');
+
+        $sql = 'UPDATE users SET name=?, email=?, password=?';
+        //入力データが空なら更新しないために今の登録内容を配列にいれる
+        $arr = [];
+        if (empty($userData['username'])) {
+            $arr[] = $_SESSION['login_user']['name'];
+        } else {
+            $arr[] = $userData['username'];
+        }
+        if (empty($userData['email'])) {
+            $arr[] = $_SESSION['login_user']['email'];
+        } else {
+            $arr[] = $userData['email'];
+        }
+        if (empty($userData['password'])) {
+            $arr[] = password_hash($_SESSION['login_user']['password'], PASSWORD_DEFAULT);
+        } else {
+            $arr[] = password_hash($userData['password'], PASSWORD_DEFAULT);
+        }
+        try {
+            $stmt = connect()->prepare($sql);
+            $result = $stmt->execute($arr);//executeはBool値を返す
+            return $result;
+        } catch (\Exception $e) {
+            echo $e->getMessage() . "<br>";
+        }
+    }
+
+    /**
+     * アカウントを削除する
+     */
+    public static function deleteUser($email)
+    {
+        //SQLの準備
+        $sql = 'DELETE FROM users WHERE email = ?';
+        //ユーザーデータを配列に入れる
+        $arr = [];
+        $arr[] = $email;
+        //SQLの実行
+        try {
+            $stmt = connect()->prepare($sql);
+            $stmt->execute($arr);//executeはBool値を返す
+        } catch (\Exception $e) {
+            return false;
         }
     }
 }

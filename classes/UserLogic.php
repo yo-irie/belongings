@@ -79,7 +79,7 @@ class UserLogic
 
     /**
      * ログイン済みか判定
-     * @param string void
+     * @param void
      * @return bool false
      */
     public static function checkLogin()
@@ -134,24 +134,30 @@ class UserLogic
         self::checkLogin();
         if (!$result) exit('ログインしてください');
 
-        $sql = 'UPDATE users SET name=?, email=?, password=?';
+        $sql = 'UPDATE users SET name=?, email=?, password=? WHERE id = ?';
         //入力データが空なら更新しないために今の登録内容を配列にいれる
         $arr = [];
+        //ユーザーネーム
         if (empty($userData['username'])) {
             $arr[] = $_SESSION['login_user']['name'];
         } else {
             $arr[] = $userData['username'];
         }
+        //Eメール
         if (empty($userData['email'])) {
             $arr[] = $_SESSION['login_user']['email'];
         } else {
             $arr[] = $userData['email'];
         }
+        //パスワード
         if (empty($userData['password'])) {
             $arr[] = password_hash($_SESSION['login_user']['password'], PASSWORD_DEFAULT);
         } else {
             $arr[] = password_hash($userData['password'], PASSWORD_DEFAULT);
         }
+        //ユーザーID(WHERE句の条件)
+        $arr[] = $_SESSION['login_user']['id'];
+
         try {
             $stmt = connect()->prepare($sql);
             $result = $stmt->execute($arr);//executeはBool値を返す
@@ -170,7 +176,11 @@ class UserLogic
         $sql = 'DELETE FROM users WHERE email = ?';
         //ユーザーデータを配列に入れる
         $arr = [];
-        $arr[] = $email;
+        if (empty($_SESSION['login_user']['email'])){
+            exit('ログインしてください');
+        } else {
+            $arr[] = $_SESSION['login_user']['email'];
+        }
         //SQLの実行
         try {
             $stmt = connect()->prepare($sql);

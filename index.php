@@ -32,6 +32,8 @@
         require "../belongings/mypage/logout.php";
     } else if ($path === '/user/logout_comp/') {
         require "../belongings/view/logout_comp.php";
+    } else if ($path === '/user/account/') {
+        require "../belongings/view/account_manage.php";
     } else {
         header("HTTP/1.1 404 Not Found");
     }

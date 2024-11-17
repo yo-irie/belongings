@@ -12,7 +12,6 @@
     }
     //ログインしているユーザー名表示用
     $login_user = $_SESSION['login_user'];
-    $categorylist = BelongingLogic::getCategoryList();
 ?>
 
 <!DOCTYPE html>
@@ -20,16 +19,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>マイページ</title>
+    <title>アカウント管理</title>
 </head>
 <body>
 <h2></h2>
-<p><?php echo h($login_user['name']); ?>さんのページです</p>
-    <?php for ($i=0; $i < count($categorylist); $i++) : ?>
-        <li><?php echo $categorylist[$i]['category_name']; ?></li>
-    <?php endfor; ?>
+<p><?php echo h($login_user['name']); ?>さんのアカウント管理ページです</p>
 
-<a href=<?php echo "http://". $_SERVER['HTTP_HOST'] . "/user/account/"; ?>>アカウント管理<br></a>
+
+<a href=<?php echo "http://". $_SERVER['HTTP_HOST'] . "/user/"; ?>>マイページに戻る<br></a>
 <form action=<?php echo "http://". h($_SERVER['HTTP_HOST']) . "/user/logout/"; ?> method="POST">
 <input type="submit" name="logout" value="ログアウト"> 
 </form>

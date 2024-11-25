@@ -13,6 +13,7 @@
     //ログインしているユーザー名表示用
     $login_user = $_SESSION['login_user'];
     $categorylist = BelongingLogic::getCategoryList();
+    $user_belonging = BelongingLogic::getUserBelongingByuserid($login_user['id']);
 ?>
 
 <!DOCTYPE html>
@@ -25,11 +26,11 @@
 <body>
 <h2></h2>
 <p><?php echo h($login_user['name']); ?>さんのページです</p>
-    <?php for ($i=0; $i < count($categorylist); $i++) : ?>
-        <li><?php echo $categorylist[$i]['category_name']; ?></li>
-    <?php endfor; ?>
 
+<a href=<?php echo "http://". $_SERVER['HTTP_HOST'] . "/user/bg/"; ?>>持ち物リスト<br></a>
+<a href=<?php echo "http://". $_SERVER['HTTP_HOST'] . "/user/wish/"; ?>>ウィッシュリスト<br></a>
 <a href=<?php echo "http://". $_SERVER['HTTP_HOST'] . "/user/account/"; ?>>アカウント管理<br></a>
+
 <form action=<?php echo "http://". h($_SERVER['HTTP_HOST']) . "/user/logout/"; ?> method="POST">
 <input type="submit" name="logout" value="ログアウト"> 
 </form>

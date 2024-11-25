@@ -124,37 +124,39 @@ class UserLogic
     }
 
     /**
-     * ユーザーを情報を更新する
+     * ログイン済みページでパスワードを更新する
+     * @param string $password
+     * @return bool $result
+     */
+    public static function updatePassword($password)
+    {
+        $sql = 'UPDATE users SET password=? WHERE id=?';
+        $arr = [];
+        //パスワード
+        $arr[] = password_hash($password, PASSWORD_DEFAULT);
+        //ユーザーID(WHERE句の条件)
+        $arr[] = $_SESSION['login_user']['id'];
+
+        try {
+            $stmt = connect()->prepare($sql);
+            $result = $stmt->execute($arr);//executeはBool値を返す
+            return $result;
+        } catch (\Exception $e) {
+            echo $e->getMessage() . "<br>";
+        }
+    }
+
+    /**
+     * ユーザー情報(名前・Eメール)を更新する
      * @param array $userData
      * @return bool $result
      */
-    public static function updateUser($userData)
+    public static function updateProfile($userData)
     {
-        $result = false;
-        self::checkLogin();
-        if (!$result) exit('ログインしてください');
-
-        $sql = 'UPDATE users SET name=?, email=?, password=? WHERE id = ?';
-        //入力データが空なら更新しないために今の登録内容を配列にいれる
+        $sql = 'UPDATE users SET name=?, email=? WHERE id=?';
         $arr = [];
-        //ユーザーネーム
-        if (empty($userData['username'])) {
-            $arr[] = $_SESSION['login_user']['name'];
-        } else {
-            $arr[] = $userData['username'];
-        }
-        //Eメール
-        if (empty($userData['email'])) {
-            $arr[] = $_SESSION['login_user']['email'];
-        } else {
-            $arr[] = $userData['email'];
-        }
-        //パスワード
-        if (empty($userData['password'])) {
-            $arr[] = password_hash($_SESSION['login_user']['password'], PASSWORD_DEFAULT);
-        } else {
-            $arr[] = password_hash($userData['password'], PASSWORD_DEFAULT);
-        }
+        $arr[] = $userData['name'];
+        $arr[] = $userData['email'];
         //ユーザーID(WHERE句の条件)
         $arr[] = $_SESSION['login_user']['id'];
 
@@ -169,6 +171,8 @@ class UserLogic
 
     /**
      * アカウントを削除する
+     * @param string $email
+     * @return bool $result
      */
     public static function deleteUser($email)
     {
@@ -176,15 +180,12 @@ class UserLogic
         $sql = 'DELETE FROM users WHERE email = ?';
         //ユーザーデータを配列に入れる
         $arr = [];
-        if (empty($_SESSION['login_user']['email'])){
-            exit('ログインしてください');
-        } else {
-            $arr[] = $_SESSION['login_user']['email'];
-        }
+        $arr[] = $email;
         //SQLの実行
         try {
             $stmt = connect()->prepare($sql);
-            $stmt->execute($arr);//executeはBool値を返す
+            $result = $stmt->execute($arr);//executeはBool値を返す
+            return $result;
         } catch (\Exception $e) {
             return false;
         }

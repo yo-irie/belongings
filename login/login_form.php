@@ -11,7 +11,7 @@
     }
 
     $err = $_SESSION;
-
+    echo password_hash('Password1', PASSWORD_DEFAULT);
     //ログインしていない場合
     $login_err = isset($_SESSION['login_err']) ? $_SESSION['login_err'] : null;
     unset($_SESSION['login_err']);

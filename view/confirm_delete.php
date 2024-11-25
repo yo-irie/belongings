@@ -10,6 +10,9 @@
         header("Location: http://" . $_SERVER["HTTP_HOST"]);
         return;
     }
+    //CSRF対策トークン生成
+    $csrf_token = setToken();
+    $_SESSION['csrf_token'] = $csrf_token;
     //ログインしているユーザー名表示用
     $login_user = $_SESSION['login_user'];
 ?>
@@ -19,17 +22,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>アカウント管理</title>
+    <title>アカウント編集</title>
 </head>
 <body>
 <h2></h2>
-<p><?php echo h($login_user['name']); ?>さんのアカウント管理ページです</p>
-<a href=<?php echo "http://". $_SERVER['HTTP_HOST'] . "/user/account/account_edit_dis/"; ?>>アカウント情報を編集する<br></a>
-<a href=<?php echo "http://". $_SERVER['HTTP_HOST'] . "/user/account/confirm_delete/"; ?>>アカウントを削除する<br></a>
-<a href=<?php echo "http://". $_SERVER['HTTP_HOST'] . "/user/"; ?>>マイページに戻る<br></a>
+<p><?php echo h($login_user['name']); ?>さんのアカウントを削除します。</p>
 
-<form action=<?php echo "http://". h($_SERVER['HTTP_HOST']) . "/user/logout/"; ?> method="POST">
-<input type="submit" name="logout" value="ログアウト"> 
+<p>よろしければ「削除」をクリックしてください。</p>
+<form action=<?php echo "http://". h($_SERVER['HTTP_HOST']) . "/user/account/delete/"; ?> method="POST">
+    <input type="hidden" name="csrf_token" value="<?php echo h($_SESSION['csrf_token']);?>">
+    <input type="submit" name="delete" value="削除"> 
 </form>
+
+<a href=<?php echo "http://". h($_SERVER['HTTP_HOST']) . "/user/account/"; ?>>アカウント管理ページに戻る<br></a>
 </body>
 </html>

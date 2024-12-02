@@ -7,8 +7,8 @@
 	$result = UserLogic::checkLogin();
 	if(!$result) {
 		$_SESSION['login_err'] = 'ログインしてください';
-		header("Location: http://" . $_SERVER["HTTP_HOST"]);
-		return;
+		header("Location: https://" . $_SERVER["HTTP_HOST"]);
+		exit;
 	}
 	$csrf_token = setToken();
 	$_SESSION['csrf_token'] = $csrf_token;
@@ -28,7 +28,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
 	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 	<div class="border col-5 m-5">
-		<form action=<?php echo "http://". h($_SERVER['HTTP_HOST']) . "/user/bg/add/"; ?> method="POST">
+		<form action=<?php echo "https://". h($_SERVER['HTTP_HOST']) . "/user/bg/add/"; ?> method="POST">
 			<br>
 			<div class="mx-3">
 				<div class="h2">持ち物を追加する</div>
@@ -62,7 +62,7 @@
 				</div>
 			</div>
 		</form>
-		<a href=<?php echo "http://". $_SERVER['HTTP_HOST'] . "/user/"; ?>>トップに戻る<br></a>
+		<a href=<?php echo "https://". $_SERVER['HTTP_HOST'] . "/user/"; ?>>トップに戻る<br></a>
 	</div>
 </body>
 </html>

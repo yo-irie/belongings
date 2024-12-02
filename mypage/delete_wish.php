@@ -7,8 +7,8 @@
 	$result = UserLogic::checkLogin();
 	if(!$result) {
 		$_SESSION['login_err'] = 'ログインしてください';
-		header("Location: http://" . $_SERVER["HTTP_HOST"]);
-		return;
+		header("Location: https://" . $_SERVER["HTTP_HOST"]);
+		exit;
 	}
 	//データ受け取り
 	$request = filter_input_array(INPUT_POST);
@@ -28,6 +28,7 @@
 		exit('持ち物削除に失敗しました');
 	}
 
-	header('Location: http://'. $_SERVER['HTTP_HOST'] .'/user/wish/');
+	header('Location: https://'. $_SERVER['HTTP_HOST'] .'/user/wish/');
+	exit;
 
 ?>

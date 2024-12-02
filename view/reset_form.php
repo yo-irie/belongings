@@ -20,7 +20,7 @@
 </head>
 <body>
 <h2>再登録フォーム</h2>
-	<form action=<?php echo "http://" . h($_SERVER['HTTP_HOST']) . "/reset/"; ?> method="POST">
+	<form action=<?php echo "https://" . h($_SERVER['HTTP_HOST']) . "/reset/"; ?> method="POST">
 		<input type="hidden" name="csrf_token" value="<?php echo h($_SESSION['csrf_token']); ?>">
 		<input type="hidden" name="reset_token" value="<?php echo h($_SESSION['reset_token']); ?>">
 		<p>

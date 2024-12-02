@@ -17,5 +17,5 @@
 	$_SESSION['login_user'] = $login_user;
 
 	echo 'ユーザー情報を更新しました';
-	echo "<a href='http://" . $_SERVER['HTTP_HOST'] . "/user/'> トップ画面へ</a>";
+	echo "<a href='https://" . $_SERVER['HTTP_HOST'] . "/user/'> トップ画面へ</a>";
 ?>

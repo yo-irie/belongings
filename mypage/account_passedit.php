@@ -29,8 +29,8 @@
     foreach ($request as $key => $value) {
       $_SESSION["{$key}"] = $value;
     }
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/user/account/account_edit_dis/');
-    return;
+    header('Location: https://' . $_SERVER['HTTP_HOST'] . '/user/account/account_edit_dis/');
+    exit;
   }
 
   //エラーがなければユーザーデータを更新
@@ -39,5 +39,5 @@
 
   UserLogic::logout();
   echo 'パスワードを更新しました。ログインしなおしてください。';
-  echo "<a href='http://" . $_SERVER['HTTP_HOST'] . "'> ログイン画面へ</a>";
+  echo "<a href='https://" . $_SERVER['HTTP_HOST'] . "'> ログイン画面へ</a>";
 ?>

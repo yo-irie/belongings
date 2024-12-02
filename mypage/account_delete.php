@@ -13,5 +13,5 @@
 	if (!$result) exit('アカウント削除に失敗しました');
 	UserLogic::logout();
 	echo 'アカウントを削除しました';
-	echo "<a href='http://" . $_SERVER['HTTP_HOST'] . "'> ログイン画面へ</a>";
+	echo "<a href='https://" . $_SERVER['HTTP_HOST'] . "'> ログイン画面へ</a>";
 ?>

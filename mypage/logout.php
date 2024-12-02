@@ -14,5 +14,6 @@
 
 	//ログアウトする処理
 	UserLogic::logout();
-	header('Location: http://' . $_SERVER['HTTP_HOST'] . '/user/logout_comp/');
+	header('Location: https://' . $_SERVER['HTTP_HOST'] . '/user/logout_comp/');
+	exit;
 ?>

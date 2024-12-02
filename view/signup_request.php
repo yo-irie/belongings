@@ -6,7 +6,8 @@
 	//ログインしていたらマイページにリダイレクト
 	$result = UserLogic::checkLogin();
 	if ($result){
-		header('Location: http://' . $_SERVER['HTTP_HOST'] . '/user/');
+		header('Location: https://' . $_SERVER['HTTP_HOST'] . '/user/');
+		exit;
 	}
 
 	$csrf_token = setToken();
@@ -22,7 +23,7 @@
 </head>
 <body>
 	<h2>仮会員登録</h2>
-		<form action=<?php echo "http://" . h($_SERVER['HTTP_HOST']) . "/signup_tmp/"; ?>  method="POST">
+		<form action=<?php echo "https://" . h($_SERVER['HTTP_HOST']) . "/signup_tmp/"; ?>  method="POST">
 			<p>
 				<label for="email">登録するメールアドレスを入力してください</label>
 				<input type="email" name="email">
@@ -33,6 +34,6 @@
 			</p>
 			
 		</form>
-		<a href=<?php echo "http://" . $_SERVER['HTTP_HOST']; ?>>ログイン画面へ</a>
+		<a href=<?php echo "https://" . $_SERVER['HTTP_HOST']; ?>>ログイン画面へ</a>
 </body>
 </html>

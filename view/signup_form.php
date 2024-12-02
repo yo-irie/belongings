@@ -17,7 +17,7 @@
 </head>
 <body>
 <h2>登録フォーム</h2>
-	<form action=<?php echo "http://" . h($_SERVER['HTTP_HOST']) . "/signup/"; ?> method="POST">
+	<form action=<?php echo "https://" . h($_SERVER['HTTP_HOST']) . "/signup/"; ?> method="POST">
 		<input type="hidden" name="csrf_token" value="<?php echo h($_SESSION['csrf_token']);?>">
 		<input type="hidden" name="register_token" value="<?php echo h($_SESSION['register_token']);?>">
 		<p>

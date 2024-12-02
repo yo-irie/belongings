@@ -7,8 +7,8 @@
 	$result = UserLogic::checkLogin();
 	if(!$result) {
 		$_SESSION['login_err'] = 'ログインしてください';
-		header("Location: http://" . $_SERVER["HTTP_HOST"]);
-		return;
+		header("Location: https://" . $_SERVER["HTTP_HOST"]);
+		exit;
 	}
 	//CSRF対策トークン生成
 	$csrf_token = setToken();
@@ -38,7 +38,7 @@
 	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 	<div class="m-5 h2"><?php echo h($login_user['name']); ?>さんのアカウントの編集ページです</div>
 	<div class="border col-5 m-5">
-		<form action=<?php echo "http://". h($_SERVER['HTTP_HOST']) . "/user/account/edit/"; ?> method="POST">
+		<form action=<?php echo "https://". h($_SERVER['HTTP_HOST']) . "/user/account/edit/"; ?> method="POST">
 			<br>
 			<div class="mx-3">
 				<div class="h5">【名前・Eメール変更】以下のフォームに入力して編集をクリックしてください</div>
@@ -63,7 +63,7 @@
 	</div>
 
 	<div class="border col-5 m-5">
-		<form action=<?php echo "http://". h($_SERVER['HTTP_HOST']) . "/user/account/passedit/"; ?> method="POST">
+		<form action=<?php echo "https://". h($_SERVER['HTTP_HOST']) . "/user/account/passedit/"; ?> method="POST">
 			<br>
 			<div class="mx-3">
 				<div class="h5">【パスワード変更】以下のフォームに入力してパスワード変更をクリックしてください</div>
@@ -99,7 +99,7 @@
 		</form>
 	</div>
 	<div class="m-5">
-		<a href=<?php echo "http://". h($_SERVER['HTTP_HOST']) . "/user/account/"; ?>>アカウント管理ページに戻る<br></a>
+		<a href=<?php echo (empty($_SERVER['HTTPS']) ? 'https://' : 'https://') . h($_SERVER['HTTP_HOST']) . "/user/account/"; ?>>アカウント管理ページに戻る<br></a>
 	</div>
 </body>
 </html>

@@ -7,8 +7,8 @@
 	$result = UserLogic::checkLogin();
 	if(!$result) {
 		$_SESSION['login_err'] = 'ログインしてください';
-		header("Location: http://" . $_SERVER["HTTP_HOST"]);
-		return;
+		header("Location: https://" . $_SERVER["HTTP_HOST"]);
+		exit;
 	}
 
 	$request = filter_input_array(INPUT_POST);
@@ -30,6 +30,7 @@
 		exit('持ち物編集に失敗しました');
 	}
 
-	header('Location: http://'. $_SERVER['HTTP_HOST'] .'/user/bg/');
+	header('Location: https://'. $_SERVER['HTTP_HOST'] .'/user/bg/');
+	exit;
 
 ?>

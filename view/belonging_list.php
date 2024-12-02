@@ -7,8 +7,8 @@
 	$result = UserLogic::checkLogin();
 	if(!$result) {
 		$_SESSION['login_err'] = 'ログインしてください';
-		header("Location: http://" . $_SERVER["HTTP_HOST"]);
-		return;
+		header("Location: https://" . $_SERVER["HTTP_HOST"]);
+		exit;
 	}
 	//ログインしているユーザー名表示用
 	$login_user = $_SESSION['login_user'];
@@ -47,7 +47,7 @@
 								<?php for ($j=0; $j < count($user_belonging); $j++) : ?><!--カテゴリーIDが合致したら名前を表示する-->
 									<?php if ($i+1 === $user_belonging[$j]['category_id']) :  $belongingid = $user_belonging[$j]['user_belonging_id']; ?>
 										<div class="accordion-body">
-											<a href=<?php echo "http://". $_SERVER['HTTP_HOST'] . "/user/bg/bg_detail?b={$belongingid}"; ?>><?php echo $user_belonging[$j]['belonging_name'] . '<br>';?></a>
+											<a href=<?php echo "https://". $_SERVER['HTTP_HOST'] . "/user/bg/bg_detail?b={$belongingid}"; ?>><?php echo $user_belonging[$j]['belonging_name'] . '<br>';?></a>
 										</div>
 									<?php endif; ?>
 								<?php endfor; ?>
@@ -56,10 +56,10 @@
 					<?php endfor; ?>
 				</div>
 			<div class="btn btn-warning mt-3 mb-3">
-				<a href=<?php echo "http://". $_SERVER['HTTP_HOST'] . "/user/bg/add_page/"; ?>>持ち物追加</a>
+				<a href=<?php echo "https://". $_SERVER['HTTP_HOST'] . "/user/bg/add_page/"; ?>>持ち物追加</a>
 			</div>
 			<br>
-			<a href=<?php echo "http://". $_SERVER['HTTP_HOST'] . "/user/"; ?>>トップ画面に戻る<br></a>
+			<a href=<?php echo "https://". $_SERVER['HTTP_HOST'] . "/user/"; ?>>トップ画面に戻る<br></a>
 		</div>
 </body>
 </html>

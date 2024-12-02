@@ -5,7 +5,8 @@
 	//ログインしていたらマイページにリダイレクト
 	$result = UserLogic::checkLogin();
 	if ($result){
-		header('Location: http://' . $_SERVER['HTTP_HOST'] . '/user/');
+		header('Location: https://' . $_SERVER['HTTP_HOST'] . '/user/');
+		exit;
 	}
 
 ?>
@@ -19,7 +20,7 @@
 </head>
 <body>
 	<h2>パスワード再設定</h2>
-	<form action=<?php echo "http://" . h($_SERVER['HTTP_HOST']) . "/reset_tmp/"; ?>  method="POST">
+	<form action=<?php echo "https://" . h($_SERVER['HTTP_HOST']) . "/reset_tmp/"; ?>  method="POST">
 		<p>
 			<label for="email">登録しているメールアドレスを入力してください</label>
 			<input type="email" name="email">
@@ -30,6 +31,6 @@
 		</p>
 		
 	</form>
-	<a href=<?php echo "http://" . h($_SERVER['HTTP_HOST']) . "/";?>>ログイン画面へ</a>
+	<a href=<?php echo "https://" . h($_SERVER['HTTP_HOST']) . "/";?>>ログイン画面へ</a>
 </body>
 </html>

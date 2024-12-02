@@ -7,8 +7,8 @@
 	$result = UserLogic::checkLogin();
 	if(!$result) {
 		$_SESSION['login_err'] = 'ログインしてください';
-		header("Location: http://" . $_SERVER["HTTP_HOST"]);
-		return;
+		header("Location: https://" . $_SERVER["HTTP_HOST"]);
+		exit;
 	}
 	//ログインしているユーザー名表示用
 	$login_user = $_SESSION['login_user'];
@@ -29,11 +29,11 @@
 	<div class="container">
 		<div class="h2 mb-4 text-success"><?php echo h($login_user['name']); ?>さんのアカウント管理ページです</div>
 		<ul class="list-group">
-			<li class="list-group-item"><a href=<?php echo "http://". $_SERVER['HTTP_HOST'] . "/user/account/account_edit_dis/"; ?>>アカウント情報を編集する<br></a></li>
-			<li class="list-group-item"><a href=<?php echo "http://". $_SERVER['HTTP_HOST'] . "/user/account/confirm_delete/"; ?>>アカウントを削除する<br></a></li>
-			<li class="list-group-item"><a href=<?php echo "http://". $_SERVER['HTTP_HOST'] . "/user/"; ?>>マイページに戻る<br></a></li>
+			<li class="list-group-item"><a href=<?php echo (empty($_SERVER['HTTPS']) ? 'https://' : 'https://') . $_SERVER['HTTP_HOST'] . "/user/account/account_edit_dis/"; ?>>アカウント情報を編集する<br></a></li>
+			<li class="list-group-item"><a href=<?php echo (empty($_SERVER['HTTPS']) ? 'https://' : 'https://') . $_SERVER['HTTP_HOST'] . "/user/account/confirm_delete/"; ?>>アカウントを削除する<br></a></li>
+			<li class="list-group-item"><a href=<?php echo (empty($_SERVER['HTTPS']) ? 'https://' : 'https://') . $_SERVER['HTTP_HOST'] . "/user/"; ?>>マイページに戻る<br></a></li>
 		</ul>
-		<form action=<?php echo "http://". h($_SERVER['HTTP_HOST']) . "/user/logout/"; ?> method="POST">
+		<form action=<?php echo (empty($_SERVER['HTTPS']) ? 'https://' : 'https://') . h($_SERVER['HTTP_HOST']) . "/user/logout/"; ?> method="POST">
 		<input type="submit" name="logout" class="btn btn-primary btn-sm mt-3" value="ログアウト"> 
 		</form>
 	</div>

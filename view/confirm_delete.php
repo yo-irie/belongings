@@ -7,8 +7,8 @@
 	$result = UserLogic::checkLogin();
 	if(!$result) {
 		$_SESSION['login_err'] = 'ログインしてください';
-		header("Location: http://" . $_SERVER["HTTP_HOST"]);
-		return;
+		header("Location: https://" . $_SERVER["HTTP_HOST"]);
+		exit;
 	}
 	//CSRF対策トークン生成
 	$csrf_token = setToken();
@@ -29,11 +29,11 @@
 	<p><?php echo h($login_user['name']); ?>さんのアカウントを削除します。</p>
 
 	<p>よろしければ「削除」をクリックしてください。</p>
-	<form action=<?php echo "http://". h($_SERVER['HTTP_HOST']) . "/user/account/delete/"; ?> method="POST">
+	<form action=<?php echo "https://". h($_SERVER['HTTP_HOST']) . "/user/account/delete/"; ?> method="POST">
 		<input type="hidden" name="csrf_token" value="<?php echo h($_SESSION['csrf_token']);?>">
 		<input type="submit" name="delete" value="削除"> 
 	</form>
 
-	<a href=<?php echo "http://". h($_SERVER['HTTP_HOST']) . "/user/account/"; ?>>アカウント管理ページに戻る<br></a>
+	<a href=<?php echo "https://". h($_SERVER['HTTP_HOST']) . "/user/account/"; ?>>アカウント管理ページに戻る<br></a>
 </body>
 </html>

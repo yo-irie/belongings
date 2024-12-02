@@ -8,6 +8,6 @@
 <body>
   <h2>ログアウト</h2>
   <p>ログアウトしました</p>
-  <a href=<?php echo "http://" . $_SERVER['HTTP_HOST']; ?>>ログイン画面へ</a>
+  <a href=<?php echo "https://" . $_SERVER['HTTP_HOST']; ?>>ログイン画面へ</a>
 </body>
 </html>

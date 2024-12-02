@@ -14,15 +14,15 @@
 	if (count($err) > 0) {
 		//エラーがあれば戻す
 		$_SESSION = $err;
-		header('Location: http://' . $_SERVER['HTTP_HOST']);
+		header('Location: https://' . $_SERVER['HTTP_HOST']);
 		return;
 	}
 	
 	$result = UserLogic::login($email, $password);
 	if (!$result) {
-		header('Location: http://' . $_SERVER['HTTP_HOST']);
+		header('Location: https://' . $_SERVER['HTTP_HOST']);
 		return;
 	}
 	//エラーがなければログイン後の画面に遷移
-	header('Location: http://' . $_SERVER['HTTP_HOST'] . '/user/');
+	header('Location: https://' . $_SERVER['HTTP_HOST'] . '/user/');
 ?>

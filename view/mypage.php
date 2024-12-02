@@ -7,8 +7,8 @@
 	$result = UserLogic::checkLogin();
 	if(!$result) {
 		$_SESSION['login_err'] = 'ログインしてください';
-		header("Location: http://" . $_SERVER["HTTP_HOST"]);
-		return;
+		header("Location: https://" . $_SERVER["HTTP_HOST"]);
+		exit;
 	}
 	//ログインしているユーザー名表示用
 	$login_user = $_SESSION['login_user'];
@@ -31,11 +31,11 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
 	<div class="container">
 	<div class="h2 mb-4 text-success"><?php echo h($login_user['name']); ?>さんのページです</div>
 		<ul class="list-group">
-			<li class="list-group-item"><a href=<?php echo "http://". $_SERVER['HTTP_HOST'] . "/user/bg/"; ?>>持ち物リスト<br></a></li>
-			<li class="list-group-item"><a href=<?php echo "http://". $_SERVER['HTTP_HOST'] . "/user/wish/"; ?>>ウィッシュリスト<br></a></li>
-			<li class="list-group-item"><a href=<?php echo "http://". $_SERVER['HTTP_HOST'] . "/user/account/"; ?>>アカウント管理<br></a></li>
+			<li class="list-group-item"><a href=<?php echo "https://". $_SERVER['HTTP_HOST'] . "/user/bg/"; ?>>持ち物リスト<br></a></li>
+			<li class="list-group-item"><a href=<?php echo "https://". $_SERVER['HTTP_HOST'] . "/user/wish/"; ?>>ウィッシュリスト<br></a></li>
+			<li class="list-group-item"><a href=<?php echo "https://". $_SERVER['HTTP_HOST'] . "/user/account/"; ?>>アカウント管理<br></a></li>
 		</ul>
-		<form action=<?php echo "http://". h($_SERVER['HTTP_HOST']) . "/user/logout/"; ?> method="POST">
+		<form action=<?php echo "https://". h($_SERVER['HTTP_HOST']) . "/user/logout/"; ?> method="POST">
 			<input type="submit" name="logout" class="btn btn-primary btn-sm mt-3" value="ログアウト"> 
 		</form>
 	</div>

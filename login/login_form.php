@@ -6,7 +6,7 @@
 	require_once '../belongings/functions.php';
 	$result = UserLogic::checkLogin();
 	if ($result){
-		header("Location: http://" . $_SERVER["HTTP_HOST"] . "/user/");
+		header("Location: https://" . $_SERVER["HTTP_HOST"] . "/user/");
 		return;
 	}
 
@@ -33,12 +33,12 @@
 <div class="m-5 h2">ログインフォーム</div>
 
 	<div class="container">
-		<?php echo $login_err; ?>
+		<?php echo "<div class='text-danger mb-3'>" . $login_err . "</div>"; ?>
 		<?php if(isset($err['msg'])) {
 			echo "<div class='form-text text-danger mb-2'>" . $err['msg'] . "</div>";
 		} ?>
 		<div class="col-6">
-			<form action=<?php echo "http://". h($_SERVER['HTTP_HOST']) . "/login/"; ?> method="POST">
+			<form action=<?php echo "https://". h($_SERVER['HTTP_HOST']) . "/login/"; ?> method="POST">
 				<div class="mb-2">
 					<label class="form-label" for="email">メールアドレス</label>
 					<input type="email" class="form-control" name="email" required>
@@ -47,20 +47,24 @@
 					} ?>
 				</div>
 				
-				<div class="mb-2">
+				<div class="mb-4">
 					<label class="form-label" for="password">パスワード</label>
 					<input type="password" class="form-control" name="password" required>
 					<?php if(isset($err['password_empty'])) {
 						echo "<div class='form-text'>" . $err['password_empty'] . "</div>";
 					} ?>
 				</div>
+				<div class="form-check mb-3">
+					<input class="form-check-input" type="checkbox" id="check_1" name="remenber">
+					<label class="form-check-label" for="check_1">ログイン情報を記憶する</label>
+				</div>
 				<p>
 					<input type="submit" class="btn btn-primary" value="ログイン">
 				</p>
 			</form>
 		</div> 
-		<a href=<?php echo "http://". $_SERVER['HTTP_HOST'] . "/resetrequest/"; ?>>パスワードをお忘れの場合<br></a>
-		<a href=<?php echo "http://". $_SERVER['HTTP_HOST'] . "/signuprequest/"; ?>>新規登録はこちら</a>
+		<a href=<?php echo 'https://' . $_SERVER['HTTP_HOST'] . "/resetrequest/"; ?>>パスワードをお忘れの場合<br></a>
+		<a href=<?php echo 'https://'. $_SERVER['HTTP_HOST'] . "/signuprequest/"; ?>>新規登録はこちら</a>
 	</div>
 </body>
 </html>

@@ -7,8 +7,8 @@
 	$result = UserLogic::checkLogin();
 	if(!$result) {
 		$_SESSION['login_err'] = 'ログインしてください';
-		header("Location: http://" . $_SERVER["HTTP_HOST"]);
-		return;
+		header("Location: https://" . $_SERVER["HTTP_HOST"]);
+		exit;
 	}
 	//URLクエリからデータ取得(b=持ち物ID)
 	$request = intval(filter_input(INPUT_GET, 'b'));
@@ -58,7 +58,7 @@
 
 			<!--編集処理-->
 			<div class="border col-5 mt-5">
-				<form action=<?php echo "http://". h($_SERVER['HTTP_HOST']) . "/user/bg/update/"; ?> method="POST">
+				<form action=<?php echo "https://". h($_SERVER['HTTP_HOST']) . "/user/bg/update/"; ?> method="POST">
 					<br>
 					<div class="mx-3">
 						<div class="h2">データを更新する</div>
@@ -99,7 +99,7 @@
 			<!--削除処理-->
 			<div class="border col-5 mt-5">
 				<div class="mx-3 mt-3"><h2>データを削除する</h2></div>
-				<form action=<?php echo "http://". h($_SERVER['HTTP_HOST']) . "/user/bg/delete/"; ?> method="POST">
+				<form action=<?php echo "https://". h($_SERVER['HTTP_HOST']) . "/user/bg/delete/"; ?> method="POST">
 					<input type="hidden" name="csrf_token" value="<?php echo h($_SESSION['csrf_token']); ?>">
 					<!--削除する持ち物IDを送信-->
 					<input type="hidden" name="belongingid" value="<?php echo h($request); ?>">
@@ -109,7 +109,7 @@
 				</form>
 			</div>
 			<div class="my-3">
-				<a href=<?php echo "http://". $_SERVER['HTTP_HOST'] . "/user/bg/"; ?>>持ち物リストへ<br></a>
+				<a href=<?php echo "https://". $_SERVER['HTTP_HOST'] . "/user/bg/"; ?>>持ち物リストへ<br></a>
 			</div>
 	</div>
 </body>

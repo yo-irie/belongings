@@ -50,7 +50,7 @@
 		mb_internal_encoding("UTF-8");
 
 		//メールに表示するURL
-		$url = "http://" . $_SERVER["HTTP_HOST"] . "/reset_show?token={$passwordResetToken}";
+		$url = "https://" . $_SERVER["HTTP_HOST"] . "/reset_show?token={$passwordResetToken}";
 
 		$subject = "パスワード再登録のメールを送付します";
 
@@ -83,7 +83,7 @@
 	<body>
 			<h2>メールを送信しました。</h2>
 			<h2>メールからパスワード再設定をしてください。</h2>
-			<a href="http://{$_SERVER["HTTP_HOST"]}/">ログイン画面に戻る</a>
+			<a href="https://{$_SERVER["HTTP_HOST"]}/">ログイン画面に戻る</a>
 	</body>
 	</html>
 	EOD;

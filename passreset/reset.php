@@ -32,7 +32,7 @@
 		foreach ($request as $key => $value) {
 				$_SESSION["{$key}"] = $value;
 		}
-		header('Location: http://' . $_SERVER['HTTP_HOST'] . '/reset_form/');
+		header('Location: https://' . $_SERVER['HTTP_HOST'] . '/reset_form/');
 		return;
 	}
 
@@ -68,7 +68,7 @@
 	</head>
 	<body>
 		<h2>パスワードの再設定を完了しました</h2>
-		<a href="http://{$_SERVER['HTTP_HOST']}/">ログイン画面に戻る</a>
+		<a href="https://{$_SERVER['HTTP_HOST']}/">ログイン画面に戻る</a>
 	</body>
 	</html>
 	EOD;

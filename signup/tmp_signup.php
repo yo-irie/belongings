@@ -46,7 +46,7 @@
 		mb_internal_encoding("UTF-8");
 
 		//メールに表示するURL
-		$url = "http://" . $_SERVER["HTTP_HOST"] . "/signup_show?token={$registerToken}";
+		$url = "https://" . $_SERVER["HTTP_HOST"] . "/signup_show?token={$registerToken}";
 
 		$subject = "仮登録が完了しました";
 
@@ -80,7 +80,7 @@
 	<body>
 		<h2>メール送信しました。</h2>
 		<h2>メールから会員登録をしてください。</h2>
-		<a href="http://{$_SERVER["HTTP_HOST"]}/">ログイン画面に戻る</a>
+		<a href="https://{$_SERVER["HTTP_HOST"]}/">ログイン画面に戻る</a>
 	</body>
 	</html>
 	EOD;

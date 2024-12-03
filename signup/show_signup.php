@@ -31,6 +31,6 @@
 	}
 
 	//エラーがなければ本登録画面を表示
-	header('Location: http://'. $_SERVER['HTTP_HOST'] .'/signup_form/');
+	header('Location: https://'. $_SERVER['HTTP_HOST'] .'/signup_form/');
 
 ?>

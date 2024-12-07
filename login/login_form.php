@@ -11,12 +11,16 @@
 	}
 
 	$err = $_SESSION;
-	//ログインしていない場合
+	//ログインしていない場合,ログインエラーメッセージ表示用
 	$login_err = isset($_SESSION['login_err']) ? $_SESSION['login_err'] : null;
 	unset($_SESSION['login_err']);
-
 	$_SESSION = array();
-	session_destroy();
+
+	//ログイン処理用のCSRFトークン
+	if(empty($_SESSION['csrf_token'])){
+		$csrf_token = setToken();
+	}
+
 ?>
 
 <!DOCTYPE html>
@@ -39,6 +43,7 @@
 		} ?>
 		<div class="col-6">
 			<form action=<?php echo "https://". h($_SERVER['HTTP_HOST']) . "/login/"; ?> method="POST">
+				<input type="hidden" name="csrf_token" value="<?php echo h($csrf_token); ?>">
 				<div class="mb-2">
 					<label class="form-label" for="email">メールアドレス</label>
 					<input type="email" class="form-control" name="email" required>
@@ -55,7 +60,7 @@
 					} ?>
 				</div>
 				<div class="form-check mb-3">
-					<input class="form-check-input" type="checkbox" id="check_1" name="remenber">
+					<input class="form-check-input" type="checkbox" id="check_1" name="remember">
 					<label class="form-check-label" for="check_1">ログイン情報を記憶する</label>
 				</div>
 				<p>

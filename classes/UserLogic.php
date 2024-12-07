@@ -77,8 +77,53 @@ class UserLogic
 		}
 	}
 
+		/**
+	 * remember_token(自動ログイン時のクッキー変数用のトークン)をセット
+	 * @param string $remember_token, $email
+	 * @return bool $result
+	 */
+	public static function setRememberToken($remember_token, $email)
+	{
+		$sql = 'UPDATE users SET remember_token = ? WHERE email = ?';
+		$arr = [];
+		$arr[] = hash('sha256', $remember_token, false);
+		$arr[] = $email;
+		try {
+			$stmt = connect()->prepare($sql);
+			$result = $stmt->execute($arr);//executeはBool値を返す
+			return $result;
+		} catch (\Exception $e) {
+			echo $e->getMessage() . "<br>";
+		}
+	}
+
+		/**
+	 * クッキーのremember_tokenからユーザーを取得
+	 * @param void
+	 * @return array $user
+	 */
+	public static function getUserByRemember()
+	{
+		$result = false;
+		//SQLの準備
+		$sql = 'SELECT * FROM users WHERE remember_token = ? AND status = ?';
+		//ユーザーデータを配列に入れる
+		$arr = [];
+		$arr[] = hash('sha256', $_COOKIE['remember_token'], false);
+		$arr[] = 'main';
+		//SQLの実行
+		try {
+			$stmt = connect()->prepare($sql);
+			$stmt->execute($arr);//executeはBool値を返す
+			$user = $stmt->fetch();//SQLの結果を返す
+			return $user;
+		} catch (\Exception $e) {
+			echo $e->getMessage() . "<br>";
+		}
+	}
+
 	/**
-	 * ログイン済みか判定
+	 * ログイン済みか判定,セッションが破棄されていたらクッキーにremember_tokenがあるかチェック
 	 * @param void
 	 * @return bool false
 	 */
@@ -88,15 +133,30 @@ class UserLogic
 		//セッションにログインユーザーがなかったらfalse
 		if (isset($_SESSION['login_user']) && $_SESSION['login_user']['id'] > 0) {
 			return $result = true;
+		} else if (isset($_COOKIE['remember_token'])) {
+			$user = self::getUserByRemember();
+			if ($user['remember_token'] === hash('sha256', $_COOKIE['remember_token'], false)) {
+				return $result = true;
+			}
 		}
-		return $result;
+		return false;
 	}
+	
 	/**
 	 * ログアウト処理
 	 */
 	public static function logout()
 	{
+		// remember_tokenをNULLにする
+		$sql = 'UPDATE users SET remember_token = NULL WHERE id = :id';
+		$stmt = connect()->prepare($sql);
+		$stmt->bindValue(':id', $_SESSION['login_user']['id'], \PDO::PARAM_INT);
+		$stmt->execute();
+		// remeber_tokenをcookieから削除
+		setcookie('remember_token', '', time() - 6000, '/');
 		$_SESSION = array();
+		// セッションクッキーを削除
+		setcookie('PHPSESSID', '', time() - 6000, '/');
 		session_destroy();
 	}
 
@@ -119,7 +179,7 @@ class UserLogic
 			$result = $stmt->execute($arr);//executeはBool値を返す
 			return $result;
 		} catch (\Exception $e) {
-			echo $e->getMessage() . "<br>";;
+			echo $e->getMessage() . "<br>";
 		}
 	}
 

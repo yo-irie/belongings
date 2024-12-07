@@ -10,10 +10,17 @@
 		header("Location: https://" . $_SERVER["HTTP_HOST"]);
 		exit;
 	}
-	//ログインしているユーザー名表示用
+	//クッキーでログインした場合にログインユーザー情報を確保する
+	if (empty($_SESSION['login_user'])) {
+		$user = UserLogic::getUserByRemember();
+		$_SESSION['login_user'] = $user;
+	}
+ 	//ログインしているユーザー名表示用
 	$login_user = $_SESSION['login_user'];
 	$categorylist = BelongingLogic::getCategoryList();
 	$user_belonging = BelongingLogic::getUserBelongingByuserid($login_user['id']);
+
+	$csrf_token = setToken();
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +43,7 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
 			<li class="list-group-item"><a href=<?php echo "https://". $_SERVER['HTTP_HOST'] . "/user/account/"; ?>>アカウント管理<br></a></li>
 		</ul>
 		<form action=<?php echo "https://". h($_SERVER['HTTP_HOST']) . "/user/logout/"; ?> method="POST">
+			<input type="hidden" name="csrf_token" value="<?php echo h($csrf_token); ?>">
 			<input type="submit" name="logout" class="btn btn-primary btn-sm mt-3" value="ログアウト"> 
 		</form>
 	</div>

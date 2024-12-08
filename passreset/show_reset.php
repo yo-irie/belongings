@@ -1,7 +1,7 @@
 <?php
 	if (session_status() == PHP_SESSION_NONE) session_start();//セッションスタートしてからファイルを読み込む
-	require_once '../belongings/functions.php';
-	require_once '../belongings/classes/UserLogic.php';
+	require_once '../public_html/functions.php';
+	require_once '../public_html/classes/UserLogic.php';
 	$pdo = connect();
 	//reset用のトークン(URLのクエリから取得)
 	$resetToken = filter_input(INPUT_GET, 'token');

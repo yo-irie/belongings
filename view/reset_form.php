@@ -3,8 +3,8 @@
 		// セッションは有効で、開始していないとき
 		session_start();
 	}
-	require_once '../belongings/functions.php';
-	require_once '../belongings/classes/UserLogic.php';
+	require_once '../public_html/functions.php';
+	require_once '../public_html/classes/UserLogic.php';
 	if(isset($_SESSION['reg'])) $err['reg'] = $_SESSION['reg'];
 	if(isset($_SESSION['match'])) $err['match'] = $_SESSION['match'];
 	unset($_SESSION['reg']);

@@ -10,9 +10,9 @@
 
 	$email = filter_input(INPUT_POST, 'email');
 
-	require_once '../belongings/dbconnect.php';
-	require_once '../belongings/functions.php';
-	require_once '../belongings/classes/UserLogic.php';
+	require_once '../public_html/dbconnect.php';
+	require_once '../public_html/functions.php';
+	require_once '../public_html/classes/UserLogic.php';
 
 	$passwordResetToken = bin2hex(random_bytes(32));
 	$_SESSION['reset_token'] = $passwordResetToken;
@@ -58,9 +58,10 @@
 						24時間以内に下記URLからパスワード再登録をしてください。
 						{$url}
 						EOD;
-			$headers = 'From: testmail@gmail.com' . "\r\n";
+			$headers = 'From: account_auto_send@lismono.jp' . "\r\n"
+									. 'Return-Path: account_auto_send@lismono.jp';
 
-			$isSent = mail($email, $subject, $body, $headers);//失敗したらfalse
+			$isSent = mb_send_mail($email, $subject, $body, $headers);//失敗したらfalse
 			if (!$isSent) throw new \Exception('メール送信に失敗しました');
 
 			//失敗しなかったら仮登録を確定する

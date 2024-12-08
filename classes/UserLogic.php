@@ -6,7 +6,7 @@ class UserLogic
 	/**
 	 * ユーザーを登録する
 	 * @param array $userData
-	 * @return bool $result
+	 * @return bool $isResult
 	 */
 	public static function createUser($userData)
 	{
@@ -19,8 +19,8 @@ class UserLogic
 
 		try {
 			$stmt = connect()->prepare($sql);
-			$result = $stmt->execute($arr);//executeはBool値を返す
-			return $result;
+			$isResult = $stmt->execute($arr);//executeはBool値を返す
+			return $isResult;
 		} catch (\Exception $e) {
 			echo $e->getMessage() . "<br>";
 		}
@@ -30,28 +30,28 @@ class UserLogic
 	 * ログイン処理
 	 * @param string $email
 	 * @param string $password
-	 * @return bool $result
+	 * @return bool $isResult
 	 */
 	public static function login($email, $password)
 	{
-		$result =  false;
+		$isResult =  false;
 		//ユーザーをemailから検索して取得
 		$user = self::getUserByEmail($email);
 		if (!$user) {//配列が空=データベースに合致するemailが存在しない場合
 			$_SESSION['msg'] = 'メールアドレスまたはパスワードが間違っています';//メールとパスワードどちらが間違っているか特定できないようにする
-			return $result;
+			return $isResult;
 		}
 
 		if (password_verify($password, $user['password'])) {
 			//ログイン成功処理
 			session_regenerate_id(true);//セッション破棄（セッションハイジャック対策）
 			$_SESSION['login_user'] = $user;
-			$result = true;
-			return $result;
+			$isResult = true;
+			return $isResult;
 		}
 
 		$_SESSION['msg'] = 'メールアドレスまたはパスワードが間違っています';
-		return $result;
+		return $isResult;
 	}
 
 	/**
@@ -80,7 +80,7 @@ class UserLogic
 		/**
 	 * remember_token(自動ログイン時のクッキー変数用のトークン)をセット
 	 * @param string $remember_token, $email
-	 * @return bool $result
+	 * @return bool $isResult
 	 */
 	public static function setRememberToken($remember_token, $email)
 	{
@@ -90,8 +90,8 @@ class UserLogic
 		$arr[] = $email;
 		try {
 			$stmt = connect()->prepare($sql);
-			$result = $stmt->execute($arr);//executeはBool値を返す
-			return $result;
+			$isResult = $stmt->execute($arr);//executeはBool値を返す
+			return $isResult;
 		} catch (\Exception $e) {
 			echo $e->getMessage() . "<br>";
 		}
@@ -104,7 +104,7 @@ class UserLogic
 	 */
 	public static function getUserByRemember()
 	{
-		$result = false;
+		$isResult = false;
 		//SQLの準備
 		$sql = 'SELECT * FROM users WHERE remember_token = ? AND status = ?';
 		//ユーザーデータを配列に入れる
@@ -129,14 +129,14 @@ class UserLogic
 	 */
 	public static function checkLogin()
 	{
-		$result = false;
+		$isResult = false;
 		//セッションにログインユーザーがなかったらfalse
 		if (isset($_SESSION['login_user']) && $_SESSION['login_user']['id'] > 0) {
-			return $result = true;
+			return $isResult = true;
 		} else if (isset($_COOKIE['remember_token'])) {
 			$user = self::getUserByRemember();
 			if ($user['remember_token'] === hash('sha256', $_COOKIE['remember_token'], false)) {
-				return $result = true;
+				return $isResult = true;
 			}
 		}
 		return false;
@@ -163,7 +163,7 @@ class UserLogic
 	/**
 	 * パスワード再設定を申請する
 	 * @param array $userData
-	 * @return bool $result
+	 * @return bool $isResult
 	 */
 	public static function requestResetting($userData)
 	{
@@ -176,8 +176,8 @@ class UserLogic
 
 		try {
 			$stmt = connect()->prepare($sql);
-			$result = $stmt->execute($arr);//executeはBool値を返す
-			return $result;
+			$isResult = $stmt->execute($arr);//executeはBool値を返す
+			return $isResult;
 		} catch (\Exception $e) {
 			echo $e->getMessage() . "<br>";
 		}
@@ -186,7 +186,7 @@ class UserLogic
 	/**
 	 * ログイン済みページでパスワードを更新する
 	 * @param string $password
-	 * @return bool $result
+	 * @return bool $isResult
 	 */
 	public static function updatePassword($password)
 	{
@@ -199,8 +199,8 @@ class UserLogic
 
 		try {
 			$stmt = connect()->prepare($sql);
-			$result = $stmt->execute($arr);//executeはBool値を返す
-			return $result;
+			$isResult = $stmt->execute($arr);//executeはBool値を返す
+			return $isResult;
 		} catch (\Exception $e) {
 			echo $e->getMessage() . "<br>";
 		}
@@ -209,7 +209,7 @@ class UserLogic
 	/**
 	 * ユーザー情報(名前・Eメール)を更新する
 	 * @param array $userData
-	 * @return bool $result
+	 * @return bool $isResult
 	 */
 	public static function updateProfile($userData)
 	{
@@ -222,8 +222,8 @@ class UserLogic
 
 		try {
 			$stmt = connect()->prepare($sql);
-			$result = $stmt->execute($arr);//executeはBool値を返す
-			return $result;
+			$isResult = $stmt->execute($arr);//executeはBool値を返す
+			return $isResult;
 		} catch (\Exception $e) {
 			echo $e->getMessage() . "<br>";
 		}
@@ -232,7 +232,7 @@ class UserLogic
 	/**
 	 * アカウントを削除する
 	 * @param string $email
-	 * @return bool $result
+	 * @return bool $isResult
 	 */
 	public static function deleteUser($email)
 	{
@@ -244,8 +244,8 @@ class UserLogic
 		//SQLの実行
 		try {
 			$stmt = connect()->prepare($sql);
-			$result = $stmt->execute($arr);//executeはBool値を返す
-			return $result;
+			$isResult = $stmt->execute($arr);//executeはBool値を返す
+			return $isResult;
 		} catch (\Exception $e) {
 			return false;
 		}

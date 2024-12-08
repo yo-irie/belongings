@@ -48,7 +48,7 @@ class BelongingLogic
 	/**
 	 * ユーザーの持ち物リストを登録する
 	 * @param array $belongingData
-	 * @return bool $result
+	 * @return bool $isResult
 	 */
 	public static function createBelonging($belongingData)
 	{
@@ -65,8 +65,8 @@ class BelongingLogic
 
 		try {
 			$stmt = connect()->prepare($sql);
-			$result = $stmt->execute($arr);//executeはBool値を返す
-			return $result;
+			$isResult = $stmt->execute($arr);//executeはBool値を返す
+			return $isResult;
 		} catch (\Exception $e) {
 			echo $e->getMessage() . "<br>";
 		}
@@ -75,22 +75,22 @@ class BelongingLogic
 	/**
 	 * ユーザーの持ち物リスト情報を更新する
 	 * @param array $belongingData | int $belongingid
-	 * @return bool $result
+	 * @return bool $isResult
 	 */
 	public static function updateBelonging($belongingData, $belongingid)
 	{
-		$sql = 'UPDATE user_belongings SET category_id=?, belonging_name=?, note=?, expiry_date=?, update_at=? WHERE user_belonging_id=?';
+		$sql = 'UPDATE user_belongings SET category_id=?, belonging_name=?, note=?, release_date=?, update_at=? WHERE user_belonging_id=?';
 		$arr = [];
 		$arr[] = $belongingData['category_id'];
 		$arr[] = $belongingData['belonging_name'];
 		$arr[] = $belongingData['note'];
-		$arr[] = $belongingData['expiry_date'];
+		$arr[] = $belongingData['release_date'];
 		$arr[] = (new DateTime('Asia/Tokyo'))->format('Y-m-d H:i:s');
 		$arr[] = $belongingid;
 		try {
 			$stmt = connect()->prepare($sql);
-			$result = $stmt->execute($arr);//executeはBool値を返す
-			return $result;
+			$isResult = $stmt->execute($arr);//executeはBool値を返す
+			return $isResult;
 		} catch (\Exception $e) {
 			echo $e->getMessage() . "<br>";
 		}
@@ -169,11 +169,11 @@ class BelongingLogic
 	/**
 	 * 持ち物を削除する
 	 * @param string $belongingid
-	 * @return bool $result
+	 * @return bool $isResult
 	 */
 	public static function deleteBelonging($belongingid)
 	{
-		$result = false;
+		$isResult = false;
 		//SQLの準備
 		$sql = 'DELETE FROM user_belongings WHERE user_belonging_id = ?';
 		//ユーザーデータを配列に入れる
@@ -182,8 +182,8 @@ class BelongingLogic
 		//SQLの実行
 		try {
 			$stmt = connect()->prepare($sql);
-			$result = $stmt->execute($arr);//executeはBool値を返す
-			return $result;
+			$isResult = $stmt->execute($arr);//executeはBool値を返す
+			return $isResult;
 		} catch (\Exception $e) {
 			return false;
 		}
@@ -192,7 +192,7 @@ class BelongingLogic
 	/**
 	 * ユーザーのウィッシュリストを登録する
 	 * @param array $belongingData
-	 * @return bool $result
+	 * @return bool $isResult
 	 */
 	public static function createWish($belongingData)
 	{
@@ -209,8 +209,8 @@ class BelongingLogic
 
 		try {
 			$stmt = connect()->prepare($sql);
-			$result = $stmt->execute($arr);//executeはBool値を返す
-			return $result;
+			$isResult = $stmt->execute($arr);//executeはBool値を返す
+			return $isResult;
 		} catch (\Exception $e) {
 			echo $e->getMessage() . "<br>";
 		}

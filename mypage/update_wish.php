@@ -1,11 +1,11 @@
 <?php
 	if (session_id() === '') session_start();
 
-	require_once '../belongings/classes/UserLogic.php';
-	require_once '../belongings/classes/BelongingLogic.php';
+	require_once '../public_html/classes/UserLogic.php';
+	require_once '../public_html/classes/BelongingLogic.php';
 	//ログインしているか判定し、していなければログイン画面へ
-	$result = UserLogic::checkLogin();
-	if(!$result) {
+	$isResult = UserLogic::checkLogin();
+	if(!$isResult) {
 		$_SESSION['login_err'] = 'ログインしてください';
 		header("Location: https://" . $_SERVER["HTTP_HOST"]);
 		exit;
@@ -24,8 +24,8 @@
 	$belongingData['note'] = $request['note'];
 	$belongingData['release_date'] = $request['release_date'];
 	//エラーがなければユーザーデータを更新
-	$result = BelongingLogic::updateBelonging($belongingData, $request['belongingid']);
-	if (!$result) {
+	$isResult = BelongingLogic::updateBelonging($belongingData, $request['belongingid']);
+	if (!$isResult) {
 		exit('ウィッシュリスト更新に失敗しました');
 	}
 

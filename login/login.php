@@ -1,7 +1,7 @@
 <?php
 	$err = [];//エラーメッセージ格納用の配列
 	if (session_id() === '') session_start();//セッションスタートしてからファイルを読み込む
-	require_once '../belongings/classes/UserLogic.php';
+	require_once '../public_html/classes/UserLogic.php';
 
 	$request = filter_input_array(INPUT_POST);
 	//CSRFトークンが不正ならば処理を中断する
@@ -26,8 +26,8 @@
 		return;
 	}
 	//ログイン処理
-	$result = UserLogic::login($email, $password);
-	if (!$result) {
+	$isResult = UserLogic::login($email, $password);
+	if (!$isResult) {
 		header('Location: https://' . $_SERVER['HTTP_HOST']);
 		return;
 	}
@@ -39,9 +39,9 @@
 	//以下、自動ログインにチェックが入っている場合の処理
 	$remember_token = bin2hex(random_bytes(32));
 	//remember_tokenをデータベースに書き込む
-	$result_remember = UserLogic::setRememberToken($remember_token, $email);
+	$isResultRemember = UserLogic::setRememberToken($remember_token, $email);
 
-	if (!$result_remember) {
+	if (!$isResultRemember) {
 		exit('次回ログイン省略処理に失敗しました');
 	} else if ($remember_token) {
 		// cookieのオプション

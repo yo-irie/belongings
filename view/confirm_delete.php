@@ -1,11 +1,11 @@
 <?php
 	if (session_status() == PHP_SESSION_NONE) session_start();
-	require_once '../belongings/functions.php';
-	require_once '../belongings/classes/UserLogic.php';
-	require_once '../belongings/classes/BelongingLogic.php';
+	require_once '../public_html/functions.php';
+	require_once '../public_html/classes/UserLogic.php';
+	require_once '../public_html/classes/BelongingLogic.php';
 	//ログインしているか判定し、していなければログイン画面へ
-	$result = UserLogic::checkLogin();
-	if(!$result) {
+	$isResult = UserLogic::checkLogin();
+	if(!$isResult) {
 		$_SESSION['login_err'] = 'ログインしてください';
 		header("Location: https://" . $_SERVER["HTTP_HOST"]);
 		exit;

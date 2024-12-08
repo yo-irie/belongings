@@ -1,11 +1,11 @@
 <?php
 	if (session_status() == PHP_SESSION_NONE) session_start();
-	require_once '../belongings/functions.php';
-	require_once '../belongings/classes/UserLogic.php';
-	require_once '../belongings/classes/BelongingLogic.php';
+	require_once '../public_html/functions.php';
+	require_once '../public_html/classes/UserLogic.php';
+	require_once '../public_html/classes/BelongingLogic.php';
 	//ログインしているか判定し、していなければログイン画面へ
-	$result = UserLogic::checkLogin();
-	if(!$result) {
+	$isResult = UserLogic::checkLogin();
+	if(!$isResult) {
 		$_SESSION['login_err'] = 'ログインしてください';
 		header("Location: https://" . $_SERVER["HTTP_HOST"]);
 		exit;
@@ -27,7 +27,7 @@
 <body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
 integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<div class="border col-5 m-5">
+<div class="border col-7 m-5">
 	<form action=<?php echo "https://". h($_SERVER['HTTP_HOST']) . "/user/wish/add/"; ?> method="POST">
 		<br>
 		<div class="mx-3">
@@ -54,8 +54,8 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
 				<textarea name="note" class="form-control"></textarea><br>
 			</div>
 			<div class="mx-3">
-				<label for="expiry">リリース日を入力</label>
-				<input type="date" name="expiry_date" min="2024-01-01" max="9999-12-31"><br>
+				<label for="release">リリース日を入力</label>
+				<input type="date" name="release_date" min="2024-01-01" max="9999-12-31"><br>
 			</div>
 			<div class="row col-5 m-3">
 				<input type="submit" name="add" value="追加" class="btn btn-primary"> 

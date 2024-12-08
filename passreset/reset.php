@@ -1,6 +1,6 @@
 <?php
 	if (session_status() == PHP_SESSION_NONE) session_start();
-	require_once '../belongings/dbconnect.php';
+	require_once '../public_html/dbconnect.php';
 	$pdo = connect();
 
 	$request = filter_input_array(INPUT_POST);

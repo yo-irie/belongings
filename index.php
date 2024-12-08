@@ -3,71 +3,103 @@
 	$path = cleanHostString($_SERVER['REQUEST_URI']);
 
 	if ($path === '/') {
-		require "../belongings/login/login_form.php";
+		require "../public_html/login/login_form.php";
 	} else if ($path === '/signuprequest/') {
-		require "../belongings/view/signup_request.php";
+		//アカウント作成リクエスト
+		require "../public_html/view/signup_request.php";
 	} else if ($path === '/signup_tmp/') {
-		require "../belongings/signup/tmp_signup.php";
+		//アカウント作成メール送信処理
+		require "../public_html/signup/tmp_signup.php";
 	} else if ($path === '/signup_show/') {
-		require "../belongings/signup/show_signup.php";
+		//アカウント作成画面表示処理
+		require "../public_html/signup/show_signup.php";
 	} else if ($path === '/signup_form/') {
-		require "../belongings/view/signup_form.php";
+		//アカウント作成画面
+		require "../public_html/view/signup_form.php";
 	} else if ($path === '/signup/') {
-		require "../belongings/signup/signup.php";
+		//アカウント作成処理
+		require "../public_html/signup/signup.php";
 	} else if ($path === '/resetrequest/') {
-		require "../belongings/view/reset_request.php";
+		//パスワード再設定リクエスト
+		require "../public_html/view/reset_request.php";
 	} else if ($path === '/reset_tmp/') {
-		require "../belongings/passreset/tmp_reset.php";
+		//パスワード再設定メール送信処理
+		require "../public_html/passreset/tmp_reset.php";
 	} else if ($path === '/reset_show/') {
-		require "../belongings/passreset/show_reset.php";
+		//パスワード再設定画面を表示する処理
+		require "../public_html/passreset/show_reset.php";
 	} else if ($path === '/reset_form/') {
-		require "../belongings/view/reset_form.php";
+		//パスワード再設定画面
+		require "../public_html/view/reset_form.php";
 	} else if ($path === '/reset/') {
-		require "../belongings/passreset/reset.php";
+		//パスワード再設定処理
+		require "../public_html/passreset/reset.php";
 	} else if ($path === '/login/') {
-		require "../belongings/login/login.php";
+		//ログイン処理
+		require "../public_html/login/login.php";
 	} else if ($path === '/user/') {
-		require "../belongings/view/mypage.php";
+		//マイページトップ画面
+		require "../public_html/view/mypage.php";
 	} else if ($path === '/user/logout/') {
-		require "../belongings/mypage/logout.php";
+		//ログアウト処理
+		require "../public_html/mypage/logout.php";
 	} else if ($path === '/user/logout_comp/') {
-		require "../belongings/view/logout_comp.php";
+		//ログアウト完了画面
+		require "../public_html/view/logout_comp.php";
 	} else if ($path === '/user/account/') {
-		require "../belongings/view/account_manage.php";
+		//アカウント編集トップ画面
+		require "../public_html/view/account_manage.php";
 	} else if ($path === '/user/account/account_edit_dis/') {
-		require "../belongings/view/account_edit_dis.php";
+		//アカウント編集画面
+		require "../public_html/view/account_edit_dis.php";
 	} else if ($path === '/user/account/edit/') {
-		require "../belongings/mypage/account_edit.php";
+		//アカウント編集処理
+		require "../public_html/mypage/account_edit.php";
 	} else if ($path === '/user/account/passedit/') {
-		require "../belongings/mypage/account_passedit.php";
+		//パスワード変更処理
+		require "../public_html/mypage/account_passedit.php";
 	} else if ($path === '/user/account/confirm_delete/') {
-		require "../belongings/view/confirm_delete.php";
+		//アカウント削除確認画面
+		require "../public_html/view/confirm_delete.php";
 	} else if ($path === '/user/account/delete/') {
-		require "../belongings/mypage/account_delete.php";
+		//アカウント削除処理
+		require "../public_html/mypage/account_delete.php";
 	} else if ($path === '/user/bg/') {
-		require "../belongings/view/belonging_list.php";
+		//持ち物リスト画面
+		require "../public_html/view/belonging_list.php";
 	} else if ($path === '/user/bg/add_page/') {
-		require "../belongings/view/belonging_add_page.php";
+		//持ち物追加画面
+		require "../public_html/view/belonging_add_page.php";
 	} else if ($path === '/user/bg/add/') {
-		require "../belongings/mypage/add_belongings.php";
+		//持ち物追加処理
+		require "../public_html/mypage/add_belongings.php";
 	} else if ($path === '/user/bg/bg_detail/') {
-		require "../belongings/view/belonging_detail.php";
+		//持ち物詳細画面
+		require "../public_html/view/belonging_detail.php";
 	} else if ($path === '/user/bg/update/') {
-		require "../belongings/mypage/update_belongings.php";
+		//持ち物編集画面
+		require "../public_html/mypage/update_belongings.php";
 	} else if ($path === '/user/bg/delete/') {
-		require "../belongings/mypage/delete_belongings.php";
+		//持ち物削除処理
+		require "../public_html/mypage/delete_public_html.php";
 	} else if ($path === '/user/wish/') {
-		require "../belongings/view/wish_list.php";
+		//欲しい物リスト画面
+		require "../public_html/view/wish_list.php";
 	} else if ($path === '/user/wish/add_page/') {
-		require "../belongings/view/wish_add_page.php";
+		//持ち物追加画面
+		require "../public_html/view/wish_add_page.php";
 	} else if ($path === '/user/wish/add/') {
-		require "../belongings/mypage/add_wish.php";
+		//持ち物追加処理
+		require "../public_html/mypage/add_wish.php";
 	} else if ($path === '/user/wish/wish_detail/') {
-		require "../belongings/view/wish_detail.php";
+		//欲しいもの詳細画面
+		require "../public_html/view/wish_detail.php";
 	} else if ($path === '/user/wish/update/') {
-		require "../belongings/mypage/update_wish.php";
+		//欲しい物編集処理
+		require "../public_html/mypage/update_wish.php";
 	} else if ($path === '/user/wish/delete/') {
-		require "../belongings/mypage/delete_wish.php";
+		//欲しいもの削除処理
+		require "../public_html/mypage/delete_wish.php";
 	} else {
 		header("HTTP/1.1 404 Not Found");
 	}

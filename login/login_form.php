@@ -2,10 +2,10 @@
 	if (session_status() == PHP_SESSION_NONE) session_start();
 
 	//ログインしていたらマイページにログイン
-	require_once '../belongings/classes/UserLogic.php';
-	require_once '../belongings/functions.php';
-	$result = UserLogic::checkLogin();
-	if ($result){
+	require_once '../public_html/classes/UserLogic.php';
+	require_once '../public_html/functions.php';
+	$isResult = UserLogic::checkLogin();
+	if ($isResult){
 		header("Location: https://" . $_SERVER["HTTP_HOST"] . "/user/");
 		return;
 	}
@@ -20,7 +20,6 @@
 	if(empty($_SESSION['csrf_token'])){
 		$csrf_token = setToken();
 	}
-
 ?>
 
 <!DOCTYPE html>

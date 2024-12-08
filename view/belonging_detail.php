@@ -1,11 +1,11 @@
 <?php
 	if (session_status() == PHP_SESSION_NONE) session_start();
-	require_once '../belongings/functions.php';
-	require_once '../belongings/classes/UserLogic.php';
-	require_once '../belongings/classes/BelongingLogic.php';
+	require_once '../public_html/functions.php';
+	require_once '../public_html/classes/UserLogic.php';
+	require_once '../public_html/classes/BelongingLogic.php';
 	//ログインしているか判定し、していなければログイン画面へ
-	$result = UserLogic::checkLogin();
-	if(!$result) {
+	$isResult = UserLogic::checkLogin();
+	if(!$isResult) {
 		$_SESSION['login_err'] = 'ログインしてください';
 		header("Location: https://" . $_SERVER["HTTP_HOST"]);
 		exit;
@@ -57,7 +57,7 @@
 			</div>
 
 			<!--編集処理-->
-			<div class="border col-5 mt-5">
+			<div class="border col-7 mt-5">
 				<form action=<?php echo "https://". h($_SERVER['HTTP_HOST']) . "/user/bg/update/"; ?> method="POST">
 					<br>
 					<div class="mx-3">
@@ -72,7 +72,9 @@
 							<label for="select_ategory" class="form-label">カテゴリーを選択</label>
 							<select name="select_category" class="form-select">
 								<?php for ($i=0; $i < count($categorylist); $i++) : ?>
-									<option value="<?php echo h($categorylist[$i]['category_name_en']); ?>"><?php echo h($categorylist[$i]['category_name']); ?></option>
+									<option value="<?php echo h($categorylist[$i]['category_name_en']); ?>"
+									<?php if($select_by_belongingid['category_id'] === $categorylist[$i]['category_id']) echo 'selected'?>>
+									<?php echo h($categorylist[$i]['category_name']); ?></option>
 								<?php endfor; ?>
 							</select>
 						</div><br>
@@ -97,7 +99,7 @@
 
 
 			<!--削除処理-->
-			<div class="border col-5 mt-5">
+			<div class="border col-7 mt-5">
 				<div class="mx-3 mt-3"><h2>データを削除する</h2></div>
 				<form action=<?php echo "https://". h($_SERVER['HTTP_HOST']) . "/user/bg/delete/"; ?> method="POST">
 					<input type="hidden" name="csrf_token" value="<?php echo h($_SESSION['csrf_token']); ?>">

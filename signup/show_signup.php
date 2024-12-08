@@ -1,7 +1,7 @@
 <?php
 	session_start();//セッションスタートしてからファイルを読み込む
-	require_once '../belongings/dbconnect.php';
-	require_once '../belongings/functions.php';
+	require_once '../public_html/dbconnect.php';
+	require_once '../public_html/functions.php';
 	$pdo = connect();
 	//本登録用のトークン(URLのクエリから取得)
 	$registerToken = filter_input(INPUT_GET, 'token');

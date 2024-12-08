@@ -1,11 +1,11 @@
 <?php
 	if (session_status() == PHP_SESSION_NONE) session_start();
-	require_once '../belongings/functions.php';
-	require_once '../belongings/classes/UserLogic.php';
-	require_once '../belongings/classes/BelongingLogic.php';
+	require_once '../public_html/functions.php';
+	require_once '../public_html/classes/UserLogic.php';
+	require_once '../public_html/classes/BelongingLogic.php';
 	//ログインしているか判定し、していなければログイン画面へ
-	$result = UserLogic::checkLogin();
-	if(!$result) {
+	$isResult = UserLogic::checkLogin();
+	if(!$isResult) {
 		$_SESSION['login_err'] = 'ログインしてください';
 		header("Location: https://" . $_SERVER["HTTP_HOST"]);
 		exit;
@@ -52,12 +52,12 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
 			<ul class="list-group list-group-flush">
 				<li class="list-group-item">名称：<?php echo h($select_by_belongingid['belonging_name']); ?><br></li>
 				<li class="list-group-item">メモ：<?php echo h($select_by_belongingid['note']); ?><br></li>
-				<li class="list-group-item">リリース日：<?php echo h($select_by_belongingid['expiry_date']); ?></li>
+				<li class="list-group-item">リリース日：<?php echo h($select_by_belongingid['release_date']); ?></li>
 			</ul>
 		</div>
 
 		<!--編集処理-->
-		<div class="border col-5 mt-5">
+		<div class="border col-7 mt-5">
 		<form action=<?php echo "https://". h($_SERVER['HTTP_HOST']) . "/user/wish/update/"; ?> method="POST">
 			<br>
 			<div class="mx-3">
@@ -71,10 +71,12 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
 				<div class="mx-3">
 					<label for="select_ategory" class="form-label">カテゴリーを選択</label>
 					<select name="select_category" class="form-select">
-						<?php for ($i=0; $i < count($categorylist); $i++) : ?>
-							<option value="<?php echo h($categorylist[$i]['category_name_en']); ?>"><?php echo h($categorylist[$i]['category_name']); ?></option>
-						<?php endfor; ?>
-					</select>
+								<?php for ($i=0; $i < count($categorylist); $i++) : ?>
+									<option value="<?php echo h($categorylist[$i]['category_name_en']); ?>"
+									<?php if($select_by_belongingid['category_id'] === $categorylist[$i]['category_id']) echo 'selected'?>>
+									<?php echo h($categorylist[$i]['category_name']); ?></option>
+								<?php endfor; ?>
+							</select>
 				</div><br>
 				<div class="mx-3">
 					<label for="bgname" class="form-label">欲しい物の名称を更新</label>
@@ -85,8 +87,8 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
 					<textarea name="note" class="form-control"><?php echo h($select_by_belongingid['note']); ?></textarea><br>
 				</div>
 				<div class="mx-3">
-					<label for="expiry" class="form-label">リリース日を更新</label>
-					<input type="date" name="expiry_date" min="2024-01-01" max="9999-12-31" ><br>
+					<label for="release" class="form-label">リリース日を更新</label>
+					<input type="date" name="release_date" min="2024-01-01" max="9999-12-31" ><br>
 				</div>
 				<div class="row col-5 m-3">
 					<input type="submit" name="update" value="更新する" class="btn btn-primary"> 
@@ -97,7 +99,7 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
 
 
 		<!--削除処理-->
-		<div class="border col-5 mt-5">
+		<div class="border col-7 mt-5">
 			<div class="mx-3 mt-3"><h2>データを削除する</h2></div>
 			<form action=<?php echo "https://". h($_SERVER['HTTP_HOST']) . "/user/wish/delete/"; ?> method="POST">
 				<input type="hidden" name="csrf_token" value="<?php echo h($_SESSION['csrf_token']); ?>">

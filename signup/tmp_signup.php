@@ -10,9 +10,9 @@
 
 	$email = filter_input(INPUT_POST, 'email');
 
-	require_once '../belongings/dbconnect.php';
-	require_once '../belongings/functions.php';
-	require_once '../belongings/classes/UserLogic.php';
+	require_once '../public_html/dbconnect.php';
+	require_once '../public_html/functions.php';
+	require_once '../public_html/classes/UserLogic.php';
 
 	$user = UserLogic::getUserByEmail($email);
 	//ユーザー登録済みかつ本登録状態ならメールを送信しない(登録済みかどうかはわからないようにする)
@@ -55,9 +55,10 @@
 						24時間以内に下記URLから本登録をしてください。
 						{$url}
 						EOD;
-		$headers = 'From: testmail@gmail.com' . "\r\n";
+		$headers = 'From: account_auto_send@lismono.jp' . "\r\n"
+								. 'Rreturn-Path: account_auto_send@lismono.jp';
 
-		$isSent = mail($email, $subject, $body, $headers);//失敗したらfalse
+		$isSent = mb_send_mail($email, $subject, $body, $headers);//失敗したらfalse
 		if (!$isSent) throw new \Exception('メール送信に失敗しました');
 
 		//失敗しなかったら仮登録を確定する

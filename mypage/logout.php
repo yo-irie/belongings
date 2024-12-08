@@ -1,6 +1,6 @@
 <?php
 	if (session_status() == PHP_SESSION_NONE) session_start();
-	require_once '../belongings/classes/UserLogic.php';
+	require_once '../public_html/classes/UserLogic.php';
 
 	$request = filter_input_array(INPUT_POST);
 	//不正な遷移でアクセスした場合の処理
@@ -13,8 +13,8 @@
 	}
 
 	//ログインしているか判定、セッションが切れておりクッキーもなければログインを促す
-	$result = UserLogic::checkLogin();
-	if(!$result) {
+	$isResult = UserLogic::checkLogin();
+	if(!$isResult) {
 		exit('セッションが切れたのでログインしてください');
 	}
 

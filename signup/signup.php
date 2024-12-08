@@ -28,13 +28,14 @@
 	}
 
 	//エラーがなければユーザーデータを更新
-	require_once '../belongings/dbconnect.php';
+	require_once '../public_html/dbconnect.php';
 	
 	try {
 		$pdo = connect();
-		$sql = 'UPDATE users SET password=:password, register_token_verified_at=:register_token_verified_at, status=:status WHERE register_token=:register_token';
+		$sql = 'UPDATE users SET name=:name, password=:password, register_token_verified_at=:register_token_verified_at, status=:status WHERE register_token=:register_token';
 		$hashedPassword = password_hash($request['password'], PASSWORD_BCRYPT);
 		$stmt = $pdo->prepare($sql);
+		$stmt->bindValue(':name', $request['name'], \PDO::PARAM_STR);
 		$stmt->bindValue(':password', $hashedPassword, \PDO::PARAM_STR);
 		$stmt->bindValue(':register_token_verified_at', (new DateTime('Asia/Tokyo'))->format('Y-m-d H:i:s'), \PDO::PARAM_STR);
 		$stmt->bindValue(':status', 'main', \PDO::PARAM_STR);
